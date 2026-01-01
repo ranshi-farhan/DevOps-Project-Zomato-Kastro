@@ -74,41 +74,62 @@ Verifiy Trivy installation: trivy --version
 
 8. Install Docker Scout
 Make sure to Login to DockerHub account in browser
-<Follow the process as explained in the video>
+logint to docker hub in your terminal using "docker login -u <username>" and then tupe the password
+then install Docker Scout using below link
+"https://raw.githubusercontent.com/docker/scout-cli/refs/heads/main/install.sh | sh -s -- -b /usr/local/bin"
+then give permission for docker scout to execute the file
+"sudo chmod 777 /var/run/docker.sock"
 
 9. Install SonarQube using Docker
 $ docker run -d --name sonar -p 9000:9000 sonarqube:lts-community
 $ docker ps (You can see SonarQube container)
+Open the SonarQube using <PUBLIC IP>:9000
 
-<Follow the process as explained in the video>
+
 
 10. Installation of Plugins in Jenkins
 Install below plugins:
-<Follow the process as explained in the video>
+-Stage View
+-Eclipse Temurin
+-Sonar Scanner
+-Docker related plugins
+-Email Extension Template
+-OWASP Dependency Check
+-NodeJS
+-Prometheus Metrics(Restart Jenkins after that)
 
 11. SonarQube configuration in Jenkins
-<Follow the process as explained in the video>
+Generate a SonarQube token from Administration->Security->Create Token and then copy it.
+
+
 
 11.1. Tools Configuration in Jenkins
-<Follow the process as explained in the video>
+-configure JDK17 tool and name it as "jdk17"
+-configure sonar scanner with name as "sonar-scanner"
+-configure nodejs with latest version of node 23 and name it "node23"
+-configure OWASP using github as installer and name it as "DP-Check"
+-configure docker using docker.com as installer and name it as "docker"
+
 
 11.2. Configuration of SonarQube Token in Jenkins
-<Follow the process as explained in the video>
+-add new credantials named "Sonar-token" in jenkins as secret text and copy the token generated previously from sonarqube.
+
 
 Lets create another credentials for DockerHub. This is being done because, as soon as the docker image is created, it should get pushed to dockerhub. 
-<Follow the process as explained in the video>
+-add credantials for your Dockerhub with name as "docker"
 
 11.3 Configuration of Email notification in Jenkins
 As soon as the build happens, i need to get an email notification to do that we have to configure our email.
-<Follow the process as explained in the video>
-
+-Go to your gmail and the generate an App Password and then copy it.
+-Then go to Jenkins and add new credentials with username as your email and password as your App password(without spaces) and name it as "email-creds"
 
 12. System Configuration in Jenkins
-<Follow the process as explained in the video>
+-Configure Sonar Server under Systems and give Sonar server URL and name it as "sonar-server".(SMTP server=smtp.gmail.com, SMTP port=465)
+-configure extension email and also email notification and then send a test notification email to your email.
+-enable default triggers for email(always/failure/success)
 
 13. Create webhook in SonarQube
-<Follow the process as explained in the video>
-
+-go to sonarqube under configurations you will see webhook and create yhe webhook using your jrnkins url(add "/sonarqube-webhook/" in the end)
 14. Create Pipeline Job
 Before pasting the pipeline script, do the following changes in the script
 1. In the stage 'Tag and Push to DockerHub', give your docker-hub username. Similar thing you should do in 'DockerScoutImage', 'Deploy to container' stages
@@ -713,6 +734,7 @@ Kind Request:
 Once after you have successfully deployed the App, kindly share your experience on LinkedIn by Tagging me and also provide the YouTube link of this project in your post, as it helps others to access the video quickly. 
 ========================================================================================================
 												HAPPY LEARNING
+
 
 
 
